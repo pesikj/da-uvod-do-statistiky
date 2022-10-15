@@ -52,15 +52,154 @@ Při testování hypotéz si zpravidla vybíráme pravděpodobnost, s jakou se c
 
 ## Výběr vhodného testu
 
-Dále zvolíme vhodný test pro ověření naší hypotézy. Výběr vhodného testu obvykle závisí na typu hypotézy, který testujeme. Dále musíme respektovat, že každý test má nějaké **předpoklady**. Vraťme se k výběru korelačního koeficientu. Pandas ve výchozím nastavení používá tzv. Pearsonův korelační koeficient. Pokud bychom s jeho pomocí chtěli ověřit, zda je vliv jedné veličiny na druhou statisticky významný, je potřeba pamatovat na to, že test hypotézy o závislosti za pomocí Pearsonova korelačního koeficientu **předpokládá, že data mají normální rozdělení** (normalitu dat).
+Dále zvolíme vhodný test pro ověření naší hypotézy.
+Statistických testů existuje obrovské množství a výběr toho správného závisí obecně na několika faktech:
+
+- Počet souborů (skupin) dat, se kterými chceme v testu pracovat. V tomto konkrétním případě chceme pracovat se dvěma soubory, můžeme mít ale pouze jeden či naopak 3 a více.
+- Statistický ukazatel nebo skutečnost, kterou chceme ověřit. Může to být například průměr, rozptyl nebo (jak je tomu v našem případě) statistická závislost.
+- Předpoklady testu. Předpoklad je nějaká podmínka, která musí být splněna, aby test dával kvalitní výsledky. Mnoho testů má předpoklad statistického rozdělení dat. Často testy rozdělujeme na parametrické a neparametrické, kde neparametrické testy jsou testy s mírnějšími předpoklady.
+
+Vraťme se k výběru korelačního koeficientu. Pandas ve výchozím nastavení používá tzv. Pearsonův korelační koeficient. Pokud bychom s jeho pomocí chtěli ověřit, zda je vliv jedné veličiny na druhou statisticky významný, je potřeba pamatovat na to, že test hypotézy o závislosti za pomocí Pearsonova korelačního koeficientu **předpokládá, že data mají normální rozdělení** (normalitu dat).
 
 Pokud si nejsme jisti, zda je tento předpoklad splněn, můžeme opět použít testování hypotéz.
 
-### Test normality dat
+| Počet datových souborů | Testovaný ukazatel | Předpoklady | Příklad výzkumné otázky | Vhodný test |
+|---|---|---|---|---|
+| 1 | průměr | normální rozdělení | průměrná výška mužů na univerzitě je méně než 180 cm | t-test |
+|   | rozdělení dat | | ceny domů mají normální rozdělení | Shapiro-Wilk test |
+| 2 | průměr | párová pozorování | výkonnost pracovníků po školení se zvýšila | párový t-test |
+|   |  | normální rozdělení | výkonnost pracovníků v dílně A je vyšší než v dílně B | t-test (záleží na tom, zda mají data stejný rozptyl) |
+|   |  | neparametrický test | voliči vládních stran hodnotí politickou situaci pozitivněji než voliči opozice | Mann–Whitney test |
+|   | závislost kategoriálních proměnných |  | oblíbený nápoj osoby se liší dle pohlaví | chí-kvadrát test nezávislosti |
+|   | korelace | normální rozdělení | cena domu a obytná plocha domu jsou statisticky závislé | test s využitím Pearsonova koeficientů |
+|   | korelace | | cena domu a obytná plocha domu jsou statisticky závislé | Test s využitím Spearmanova koeficientu nebo Kendallova tau |
+| 3 | průměr | normální rozdělení | výkonnost pracovníků ve třech dílnách se liší | ANOVA |
 
-Testujeme-li normalitu dat, formulujeme hypotézy následujícím způsobem:
+## Test normality dat
 
-- Nulová hypotéza: Data mají normální rozdělení.
-- Alternativní hypotéza: Data nemají normální rozdělení.
+Začneme s testem cen domů. Testujeme-li normalitu dat, formulujeme hypotézy následujícím způsobem:
 
-Pro ověření normality dat existuje řada testů. Oblíbený je například Shapiro-Wilk test, který je součástí modulu `scipy`.
+- Nulová hypotéza: Ceny domů v našem souboru mají normální rozdělení.
+- Alternativní hypotéza: Ceny domů v našem souboru nemají normální rozdělení.
+
+Pro ověření normality dat existuje řada testů. Oblíbený je například Shapiro-Wilk test, který je součástí modulu `scipy`. Pro provedení testu použijeme funkci `shapiro` z modulu `scipy`. Funkci předáváme data ve sloupci `SalePrice`.
+
+```py
+import pandas
+from scipy import stats
+
+data = pandas.read_csv("clean_train.csv")
+res = stats.shapiro(data["SalePrice"])
+print(res)
+```
+
+Funkce vrací tajemný výsledek
+
+```
+ShapiroResult(statistic=0.8918800354003906, pvalue=8.921436004661806e-31)
+```
+
+Co tato záhadná čísla znamenají?
+
+- `statistics` je hodnota statistiky testu. Statistika testu je v podstatě matematický vzoreček. Každý statistický test má vlastní vzorek pro výpočet statistiky. V případě Mann-Whitney testu měří vzoreček, jak jsou hodnoty v datech odlišné od normálního rozdělení.
+- `pvalue` (p-hodnota) se váže k hladině významnosti. p-hodnotu využijeme pro rozhodnutí o platnosti alternativní hypotézy.
+
+Platí následující pravidla.
+
+- Pokud je **p-hodnota větší než hladina významnosti, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
+- Pokud je **p-hodnota menší než hladina významnosti, nezamítáme nulovou hypotézu.**
+
+Pokud si zvolíme hladinu významnosti jako 5 %, což je nejčastější volba, můžeme zapsat pravidlo konkrétněji.
+
+- Pokud je **p-hodnota > 0.05, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
+- Pokud je **p-hodnota < 0.05, nezamítáme nulovou hypotézu.**
+
+Na internetu lze nalézt obrovské množství vědeckých i méně vědeckých obrázků, které vám umožní si toto pravidlo zapamatovat.
+
+![](images/p-value_meme.png)
+
+V našem případě je p-hodnota `8.921436004661806e-31`. Pozor, velmi důležitý je závěr `e-31`. Číslo je ve skutečnosti velmi malé, prvních 30 čísel desetinné části jsou 0 a až poté přichází nějaká nenulová čísla. Hodnota je tedy rozhodně menší než 0.05, tím pádem nulovou hypotézu zamítáme a tvrdíme, že data o cenách domů nemají normální rozdělení.
+
+## Test korelace
+
+Vraťme se k testu korelace. Víme, že data o cenách domů nemají normální rozdělení, měli bychom tedy použít test založený na Spearmanově koeficientu nebo na Kendallově tau.
+
+Využijme Spearmanův koeficient.
+
+```py
+res = stats.spearmanr(data["GrLivArea"], data["SalePrice"])
+print(res)
+```
+
+Program vrátí výsledek
+
+```
+SpearmanrResult(correlation=0.7312378789702222, pvalue=7.801875110918258e-244)
+```
+
+Číslo je opět velmi malé a menší než 0.05, v tomto případě zamítáme nulovou hypotézu. Tento výsledek je pro nás příznivý. Prokázali jsme totiž závislost mezi cenou domu a jeho podlahovou plochou. Podlahová plocha domu je tedy důležitou informací pro jeho ocenění.
+
+# Regrese
+
+Samotná informace o tom, že existuje statisticky významný vztah mezi obytnou plochou domu a jeho cenou, sice může být zajímavá, ale můžeme zjistit více. K tomu můžeme využít regresi. Regrese je nástroj, který umí vztah mezi dvěma proměnnými popsat. Abychom si pod slovem "popsat" dokázali něco představit, využijeme graf. Využijeme opět modul `seaborn`, tentokrát vygenerujeme graf pomocí funkce `regplot()`. U regrese vždy rozlušujeme mezi **závislou** (**vysvětlovanou**) a **nezávislou** (**vysvětlující**) proměnnou. Závislou proměnnou umísťujeme na svislou osu (*y*) a nezávislou vodorovnou osu (*x*). V našem případě je nezávislou proměnnou obytná plocha domu a závislou proměnnou cena. Tvrdíme totiž, že obytná plocha domu ovlivňuje cenu, tj. cenu vysvětlujeme pomocí obytné plochy.
+
+```py
+import pandas
+import seaborn
+import matplotlib.pyplot as plt
+
+data = pandas.read_csv("clean_train.csv")
+g = seaborn.regplot(x="GrLivArea", y="SalePrice", data=data, scatter_kws={"s": 1}, line_kws={"color":"r"})
+plt.show()
+```
+
+Graf, který vygeneruje funkce `regplot()`, je podobný grafu vygenerovanému funkcí `plot_joint()`. Navíc je tam červená čára. Právě tato čára je popisem vztahu mezi obytnou plochou a cenou. Pokud bychom na základě obytné plochy chtěli odhadnout cenu domu, pro příslušnou obytnou plochu na ose *x* přečteme cenu na ose *y*.
+
+![](images/regplot.png)
+
+Pro reálné použití modelu je ale lepší využít modul `scipy`, který nám dá matematický popis dané funkce. Naší snahou je nyní odhadnout model, který lze matematicky zapsat jako:
+
+*y = a + b \* x + e*
+
+kde *y* je cena domu, *x* je obytná plocha a koeficienty *a* a *b* jsou ty, které se snažíme odhadnout. Koeficient *b* udává "strmost" regresní čáry, tj. říká, jak rychle roste cena domu s růstem jeho obytné plochy. Koeficient *a* pak říká, kde červená čára prochází osou *y*. Pokud by došlo ke změně ceny všech domů bez ohledu na obytnou plochu (např. v důsledku ekonomické krize), změnila by se hodnota koeficientu *a*.
+
+```py
+import pandas
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+data = pandas.read_csv("clean_train.csv")
+
+formula = "SalePrice ~ GrLivArea"
+data = sm.add_constant(data)
+mod = smf.ols(formula=formula, data=data)
+res = mod.fit()
+print(res.params)
+```
+
+Výsledek je následující:
+
+```
+Intercept    12581.885623
+GrLivArea      111.230746
+dtype: float64
+```
+
+Hodnota *slope* je hodnota koeficientu *b* a hodnota *slope* je hodnota koeficientu *a*. Pokud bychom chtěli například odhadnout cenu domu s obytnou plochou 2198, použijeme následující příkazy.
+
+```py
+area = 2198
+estimated_price = result[1] + result[0] * area
+print(estimated_price)
+```
+
+Program vypíše hodnotu
+
+```
+257067.06512733325
+```
+
+## Hodnocení kvality modelu
+
+Regresní model máme, otázkou ale je, jak dobrý den model je? Jedním ze základních ukazatelů modelu je **koeficient determinace**. Ten říká, kolik procent rozptylu závislé proměnné jsme naším modelem vysvětlili. V našem případě je jeho hodnota 0.72, tj. vysvětlili jsme 72 % rozptylu ceny.
+

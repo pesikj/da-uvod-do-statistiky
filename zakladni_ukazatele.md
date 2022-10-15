@@ -179,6 +179,7 @@ Závislost si můžeme ukázat na obrázku, tj. bodovém grafu. K vytvoření ob
 ```py
 import seaborn
 import matplotlib.pyplot as plt
+data = pandas.read_csv("clean_train.csv")
 g = seaborn.JointGrid(data=data, x="GrLivArea", y="SalePrice")
 g.plot_joint(seaborn.scatterplot, legend=False)
 plt.show()
