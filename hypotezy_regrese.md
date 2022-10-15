@@ -177,7 +177,7 @@ res = mod.fit()
 print(res.params)
 ```
 
-Výsledek je následující:
+Program provedl následující hodnoty koeficientu *a* (`Intercept`) a *b* (`GrLivArea`).
 
 ```
 Intercept    12581.885623
@@ -185,21 +185,12 @@ GrLivArea      111.230746
 dtype: float64
 ```
 
-Hodnota *slope* je hodnota koeficientu *b* a hodnota *slope* je hodnota koeficientu *a*. Pokud bychom chtěli například odhadnout cenu domu s obytnou plochou 2198, použijeme následující příkazy.
-
-```py
-area = 2198
-estimated_price = result[1] + result[0] * area
-print(estimated_price)
-```
-
-Program vypíše hodnotu
-
-```
-257067.06512733325
-```
-
 ## Hodnocení kvality modelu
 
-Regresní model máme, otázkou ale je, jak dobrý den model je? Jedním ze základních ukazatelů modelu je **koeficient determinace**. Ten říká, kolik procent rozptylu závislé proměnné jsme naším modelem vysvětlili. V našem případě je jeho hodnota 0.72, tj. vysvětlili jsme 72 % rozptylu ceny.
+Regresní model máme, otázkou ale je, jak dobrý den model je? Jedním ze základních ukazatelů modelu je **koeficient determinace**. Ten říká, kolik procent rozptylu závislé proměnné jsme naším modelem vysvětlili.
 
+```py
+print(res.rsquared)
+```
+
+V našem případě je jeho hodnota 0.519, tj. vysvětlili jsme 51.9 % rozptylu ceny.
