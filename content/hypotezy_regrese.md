@@ -43,10 +43,23 @@ Poněkud nepříjemnou zprávou pro vás může být informace, že výsledek na
 
 Při testování se můžeme dopustit 2 chyb, které jsou popsány v tabulce níže.
 
-|   | Nulová hypotéze platí | Nulová hypotéza neplatí |
-|---|---|---|
-| **Nezamítáme nulovou hypotézu** | Správný výsledek | Chyba II. druhu |
-| **Zamítáme nulovou hypotézu**  | Chyba I. druhu | Správný výsledek |
+<table>
+    <tr>
+        <th></th>
+        <th>Nulová hypotéze platí</th>
+        <th>Nulová hypotéza neplatí</th>
+    </tr>
+    <tr>
+        <td><b>Nezamítáme nulovou hypotézu</b></td>
+        <td>Správný výsledek</td>
+        <td>Chyba II. druhu</td>
+    </tr>
+    <tr>
+        <td><b>Zamítáme nulovou hypotézu</b></td>
+        <td>Chyba I. druhu</td>
+        <td>Správný výsledek</td>
+    </tr>
+</table>
 
 Při testování hypotéz si zpravidla vybíráme pravděpodobnost, s jakou se chceme dopustit chyby I. druhu. Pravděpodobnost chyby I. druhu označujeme jako **hladinu významnosti**.
 
@@ -63,17 +76,78 @@ Vraťme se k výběru korelačního koeficientu. Pandas ve výchozím nastavení
 
 Pokud si nejsme jisti, zda je tento předpoklad splněn, můžeme opět použít testování hypotéz.
 
-| Počet datových souborů | Testovaný ukazatel | Předpoklady | Příklad výzkumné otázky | Vhodný test |
-|---|---|---|---|---|
-| 1 | průměr | normální rozdělení | průměrná výška mužů na univerzitě je méně než 180 cm | t-test |
-|   | rozdělení dat | | ceny domů mají normální rozdělení | Shapiro-Wilk test |
-| 2 | průměr | párová pozorování | výkonnost pracovníků po školení se zvýšila | párový t-test |
-|   |  | normální rozdělení | výkonnost pracovníků v dílně A je vyšší než v dílně B | t-test (záleží na tom, zda mají data stejný rozptyl) |
-|   |  | neparametrický test | voliči vládních stran hodnotí politickou situaci pozitivněji než voliči opozice | Mann–Whitney test |
-|   | závislost kategoriálních proměnných |  | oblíbený nápoj osoby se liší dle pohlaví | chí-kvadrát test nezávislosti |
-|   | korelace | normální rozdělení | cena domu a obytná plocha domu jsou statisticky závislé | test s využitím Pearsonova koeficientů |
-|   | korelace | | cena domu a obytná plocha domu jsou statisticky závislé | Test s využitím Spearmanova koeficientu nebo Kendallova tau |
-| 3 | průměr | normální rozdělení | výkonnost pracovníků ve třech dílnách se liší | ANOVA |
+<table>
+    <tr>
+        <th>Počet datových souborů</th>
+        <th>Testovaný ukazatel</th>
+        <th>Předpoklady</th>
+        <th>Příklad výzkumné otázky</th>
+        <th>Vhodný test</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>průměr</td>
+        <td>normální rozdělení</td>
+        <td>průměrná výška mužů na univerzitě je méně než 180 cm</td>
+        <td>t-test</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>rozdělení dat</td>
+        <td></td>
+        <td>ceny domů mají normální rozdělení</td>
+        <td>Shapiro-Wilk test</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>průměr</td>
+        <td>párová pozorování</td>
+        <td>výkonnost pracovníků po školení se zvýšila</td>
+        <td>párový t-test</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>normální rozdělení</td>
+        <td>výkonnost pracovníků v dílně A je vyšší než v dílně B</td>
+        <td>t-test (záleží na tom, zda mají data stejný rozptyl)</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>neparametrický test</td>
+        <td>voliči vládních stran hodnotí politickou situaci pozitivněji než voliči opozice</td>
+        <td>Mann–Whitney test</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>závislost kategoriálních proměnných</td>
+        <td></td>
+        <td>oblíbený nápoj osoby se liší dle pohlaví</td>
+        <td>chí-kvadrát test nezávislosti</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>korelace</td>
+        <td>normální rozdělení</td>
+        <td>cena domu a obytná plocha domu jsou statisticky závislé</td>
+        <td>test s využitím Pearsonova koeficientů</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>korelace</td>
+        <td></td>
+        <td>cena domu a obytná plocha domu jsou statisticky závislé</td>
+        <td>Test s využitím Spearmanova koeficientu nebo Kendallova tau</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>průměr</td>
+        <td>normální rozdělení</td>
+        <td>výkonnost pracovníků ve třech dílnách se liší</td>
+        <td>ANOVA</td>
+    </tr>
+</table>
 
 ## Test normality dat
 
@@ -83,6 +157,8 @@ Začneme s testem cen domů. Testujeme-li normalitu dat, formulujeme hypotézy n
 - Alternativní hypotéza: Ceny domů v našem souboru nemají normální rozdělení.
 
 Pro ověření normality dat existuje řada testů. Oblíbený je například Shapiro-Wilk test, který je součástí modulu `scipy`. Pro provedení testu použijeme funkci `shapiro` z modulu `scipy`. Funkci předáváme data ve sloupci `SalePrice`.
+
+Pracujeme opět s daty v souboru [clean_train.csv](media/zakladni-ukazatele/clean_train.csv).
 
 ```py
 import pandas
@@ -116,7 +192,7 @@ Pokud si zvolíme hladinu významnosti jako 5 %, což je nejčastější volba, 
 
 Na internetu lze nalézt obrovské množství vědeckých i méně vědeckých obrázků, které vám umožní si toto pravidlo zapamatovat.
 
-![](images/p-value_meme.png)
+![](media/hypotezy-regrese/p-value_meme.png)
 
 V našem případě je p-hodnota `8.921436004661806e-31`. Pozor, velmi důležitý je závěr `e-31`. Číslo je ve skutečnosti velmi malé, prvních 30 čísel desetinné části jsou 0 a až poté přichází nějaká nenulová čísla. Hodnota je tedy rozhodně menší než 0.05, tím pádem nulovou hypotézu zamítáme a tvrdíme, že data o cenách domů nemají normální rozdělení.
 
@@ -164,7 +240,7 @@ plt.show()
 
 Graf, který vygeneruje funkce `regplot()`, je podobný grafu vygenerovanému funkcí `plot_joint()`. Navíc je tam červená čára. Právě tato čára je popisem vztahu mezi obytnou plochou a cenou. Pokud bychom na základě obytné plochy chtěli odhadnout cenu domu, pro příslušnou obytnou plochu na ose *x* přečteme cenu na ose *y*.
 
-![](images/regplot.png)
+![](media/hypotezy-regrese/regplot.png)
 
 Pro reálné použití modelu je ale lepší využít modul `scipy`, který nám dá matematický popis dané funkce. Naší snahou je nyní odhadnout model, který lze matematicky zapsat jako:
 
