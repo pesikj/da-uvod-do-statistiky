@@ -160,20 +160,24 @@ Pro ověření normality dat existuje řada testů. Oblíbený je například Sh
 
 Pracujeme opět s daty v souboru [clean_train.csv](media/zakladni-ukazatele/clean_train.csv).
 
-```py
+<pre>
+    <code>
 import pandas
 from scipy import stats
 
 data = pandas.read_csv("clean_train.csv")
 res = stats.shapiro(data["SalePrice"])
 print(res)
-```
+    </pre>
+</code>
 
 Funkce vrací tajemný výsledek
 
-```
+<pre>
+    <code>
 ShapiroResult(statistic=0.8918800354003906, pvalue=8.921436004661806e-31)
-```
+    </pre>
+</code>
 
 Co tato záhadná čísla znamenají?
 
@@ -202,16 +206,20 @@ Vraťme se k testu korelace. Víme, že data o cenách domů nemají normální 
 
 Využijme Spearmanův koeficient.
 
-```py
+<pre>
+    <code>
 res = stats.spearmanr(data["GrLivArea"], data["SalePrice"])
 print(res)
-```
+    </pre>
+</code>
 
 Program vrátí výsledek
 
-```
+<pre>
+    <code>
 SpearmanrResult(correlation=0.7312378789702222, pvalue=7.801875110918258e-244)
-```
+    </pre>
+</code>
 
 Číslo je opět velmi malé a menší než 0.05, v tomto případě zamítáme nulovou hypotézu. Tento výsledek je pro nás příznivý. Prokázali jsme totiž závislost mezi cenou domu a jeho podlahovou plochou. Podlahová plocha domu je tedy důležitou informací pro jeho ocenění.
 
@@ -228,7 +236,8 @@ Na minulé lekci jsme řešili korelaci mezi plochou garáže (`GarageArea`) a c
 
 Samotná informace o tom, že existuje statisticky významný vztah mezi obytnou plochou domu a jeho cenou, sice může být zajímavá, ale můžeme zjistit více. K tomu můžeme využít regresi. Regrese je nástroj, který umí vztah mezi dvěma proměnnými popsat. Abychom si pod slovem "popsat" dokázali něco představit, využijeme graf. Využijeme opět modul `seaborn`, tentokrát vygenerujeme graf pomocí funkce `regplot()`. U regrese vždy rozlušujeme mezi **závislou** (**vysvětlovanou**) a **nezávislou** (**vysvětlující**) proměnnou. Závislou proměnnou umísťujeme na svislou osu (*y*) a nezávislou vodorovnou osu (*x*). V našem případě je nezávislou proměnnou obytná plocha domu a závislou proměnnou cena. Tvrdíme totiž, že obytná plocha domu ovlivňuje cenu, tj. cenu vysvětlujeme pomocí obytné plochy.
 
-```py
+<pre>
+    <code>
 import pandas
 import seaborn
 import matplotlib.pyplot as plt
@@ -236,7 +245,8 @@ import matplotlib.pyplot as plt
 data = pandas.read_csv("clean_train.csv")
 g = seaborn.regplot(x="GrLivArea", y="SalePrice", data=data, scatter_kws={"s": 1}, line_kws={"color":"r"})
 plt.show()
-```
+    </pre>
+</code>
 
 Graf, který vygeneruje funkce `regplot()`, je podobný grafu vygenerovanému funkcí `plot_joint()`. Navíc je tam červená čára. Právě tato čára je popisem vztahu mezi obytnou plochou a cenou. Pokud bychom na základě obytné plochy chtěli odhadnout cenu domu, pro příslušnou obytnou plochu na ose *x* přečteme cenu na ose *y*.
 
@@ -248,7 +258,8 @@ Pro reálné použití modelu je ale lepší využít modul `scipy`, který nám
 
 kde *y* je cena domu, *x* je obytná plocha a koeficienty *a* a *b* jsou ty, které se snažíme odhadnout. Koeficient *b* udává "strmost" regresní čáry, tj. říká, jak rychle roste cena domu s růstem jeho obytné plochy. Koeficient *a* pak říká, kde červená čára prochází osou *y*. Pokud by došlo ke změně ceny všech domů bez ohledu na obytnou plochu (např. v důsledku ekonomické krize), změnila by se hodnota koeficientu *a*.
 
-```py
+<pre>
+    <code>
 import pandas
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
@@ -260,21 +271,26 @@ data = sm.add_constant(data)
 mod = smf.ols(formula=formula, data=data)
 res = mod.fit()
 print(res.params)
-```
+    </pre>
+</code>
 
 Program provedl následující hodnoty koeficientu *a* (`Intercept`) a *b* (`GrLivArea`).
 
-```
+<pre>
+    <code>
 Intercept    12581.885623
 GrLivArea      111.230746
 dtype: float64
-```
+    </pre>
+</code>
 
 Regresní model máme, otázkou ale je, jak dobrý den model je? Jedním ze základních ukazatelů modelu je **koeficient determinace**. Ten říká, kolik procent rozptylu závislé proměnné jsme naším modelem vysvětlili.
 
-```py
+<pre>
+    <code>
 print(res.rsquared)
-```
+    </pre>
+</code>
 
 V našem případě je jeho hodnota 0.519, tj. vysvětlili jsme 51.9 % rozptylu ceny, což zatím není moc dobrý výsledek. Další rozšíření modelu vyzkoušíme při cvičení.
 

@@ -7,29 +7,35 @@ Spusťte Visual Studio Code a otevřete si nový terminál (z horní lišty vybe
 ### Windows
 Napište **postupně** následující příkazy a po každém z nich stiskni **Enter**:
 
-```shell
+<pre>
+    <code>
 pip install pandas
 pip install matplotlib
 pip install seaborn
 pip install scipy
 pip install statsmodels
-```
+    </pre>
+</code>
 
 ### Mac OS, Linux
 Napište **postupně** následující příkazy a po každém z nich stiskni **Enter**:
 
-```shell
+<pre>
+    <code>
 pip3 install pandas
 pip3 install matplotlib
 pip3 install seaborn
 pip3 install scipy
 pip3 install statsmodels
-```
+    </pre>
+</code>
 
 `pandas` je relativně veliký modul, který obsahuje mnoho dalších modulů, takže instalace bude nějakou chvíli trvat. Terminál během instalace vypíše spoustu textu. Někde na konci bychom pak měli vidět text podobný tomuto:
 
-```shell
+<pre>
+    <code>
 Successfully installed pandas-1.2.3
-```
+    </pre>
+</code>
 
 Čísla verzí se mohou lišit, záleží na tom, jaká verze je právě aktuální.
