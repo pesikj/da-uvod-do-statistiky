@@ -177,6 +177,7 @@ Závislost si můžeme ukázat na obrázku, tj. bodovém grafu. K vytvoření ob
 ![](images/bodovy_graf.png)
 
 ```py
+import pandas
 import seaborn
 import matplotlib.pyplot as plt
 data = pandas.read_csv("clean_train.csv")
@@ -214,7 +215,13 @@ Datová věda (*data science*) proto není pouze o výpočtech, ale i o znalosti
 
 ## Plocha garáže
 
-Uvažujme není plochu garáže (`GarageArea`). Ovlivňuje plocha garáže cenu domu? Ověř to pomocí korelace mezi oběma hodnotami. Dále se podívej na bodový graf obou hodnot. Je z grafu vidět rozdílná síla závislosti oproti obytné ploše domu? Dále zkus prověřit plochu pozemku včetně nezastavěných částí (`LotArea`).
+Uvažujme nyní plochu garáže (`GarageArea`). Ovlivňuje plocha garáže cenu domu? Ověř to pomocí korelace mezi oběma hodnotami. Dále se podívej na bodový graf obou hodnot. Je z grafu vidět rozdílná síla závislosti oproti obytné ploše domu? Dále zkus prověřit plochu pozemku včetně nezastavěných částí (`LotArea`).
+
+## Plocha pozemku
+
+Uvažujme nyní plochu pozemku, na kterém dům stojí (`LotArea`). Ovlivňuje plocha pozemku cenu domu? Opět se podívej na hodnotu korelace mezi cenou domu a plochou pozemku a zobraz si vztah mezi hodnotami pomocí grafu. Dále se podívej na korelaci mezi plochou pozemku a obytnou plochou domu. Je zde nějaká korelace, tj. platí, že čím větší je obytná plocha domu, tím větší má tendenci být pozemek?
+
+# Bonusové cvičení
 
 ## Popisná statistika jednou metodou
 
