@@ -1,0 +1,23 @@
+[
+  {
+    "section_slug": "statistika-python",
+    "section_title": "Statistika v Pythonu",
+    "section_articles": [
+      {
+        "file_name": "instalace.md",
+        "title": "Instalace",
+        "slug": "instalace"
+      },
+      {
+        "file_name": "zakladni_ukazatele.md",
+        "title": "Základní ukazatele",
+        "slug": "zakladni-ukazatele"
+      },
+      {
+        "file_name": "hypotezy_regrese.md",
+        "title": "Testování hypotéz a regrese",
+        "slug": "hypotezy-regrese"
+      }
+    ]
+  }
+]

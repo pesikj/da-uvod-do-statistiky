@@ -6,12 +6,14 @@ Základní otázkou je, proč se statistikou vůbec zabýváme a co statistika n
 
 Máme-li k dispozici nějaký soubor dat, často nás zajímají různé statistické ukazatele. Nejčastěji nás zajímají ukazatele **úrovně (polohy)** a ukazatele **variability**. Ty s přehledem zvládne například modul `statistics`, který je součástí základních modulů Pythonu. My pro zpracování dat využijeme modul `pandas`.
 
-Budeme využívat data o cenách domů, která jsou v souboru `house_prices.csv`. V souboru je důležitý sloupec `SalePrice`, tj. cena domu, a poté různé parametry domu, jako obytná plocha, typ čtvrti, ve které se dům nachází atd. Data načteme ze souboru `clean_train.csv` pomocí metody `read_csv()`. Data jsou uložena do struktury, kterou nazýváme `DataFrame` (tabulka) a je v podstatě obdoba SQL tabulky. U každé tabulky máme různě pojmenované sloupečky a můžeme vždy vybrat jeden sloupeček a pracovat jen s ním.
+Budeme využívat data o cenách domů, která jsou v souboru [clean_train.csv](media/zakladni-ukazatele/clean_train.csv). V souboru je důležitý sloupec `SalePrice`, tj. cena domu, a poté různé parametry domu, jako obytná plocha, typ čtvrti, ve které se dům nachází atd. Data načteme ze souboru `clean_train.csv` pomocí metody `read_csv()`. Data jsou uložena do struktury, kterou nazýváme `DataFrame` (tabulka) a je v podstatě obdoba SQL tabulky. U každé tabulky máme různě pojmenované sloupečky a můžeme vždy vybrat jeden sloupeček a pracovat jen s ním.
 
-```py
+<pre>
+    <code>
 import pandas
 data = pandas.read_csv("clean_train.csv")
-```
+    </code>
+</pre>
 
 ## Průměr a medián
 
@@ -19,10 +21,12 @@ Nejznámější ukazatele polohy jsou **aritmetický průměr** a **medián**. A
 
 Průměr zjistíme pomocí metody `mean()` a medián pomocí metody `median()`, metody použijeme pro sloupeček `SalePrice`, tj. pro prodejní cenu domu.
 
-```py
+<pre>
+    <code>
 print(data["SalePrice"].mean())
 print(data["SalePrice"].median())
-```
+    </pre>
+</code>
 
 V jakých případech nás může průměr zmáast?
 
@@ -31,9 +35,10 @@ V jakých případech nás může průměr zmáast?
 
 ## Rozptyl
 
-Ukazatele variability říkají, jak **různorodé** jsou hodnoty v rámci jedné skupiny. Funkci rozptylu si nejlépe ukážeme, když ho spočítáme pro dva různé soubory dat. Uvažujme, že rozdělíme domy do dvou skupin, a to podle typu obytné zóny, ve které se nacházejí. Máme nyní dva nové soubory - `house_prices_RM.csv` s domy v zónách se středně hustou zástavbou a `house_prices_RH.csv` s domy v zónách s velmi hustou zástavbou.
+Ukazatele variability říkají, jak **různorodé** jsou hodnoty v rámci jedné skupiny. Funkci rozptylu si nejlépe ukážeme, když ho spočítáme pro dva různé soubory dat. Uvažujme, že rozdělíme domy do dvou skupin, a to podle typu obytné zóny, ve které se nacházejí. Máme nyní dva nové soubory - [house_prices_RM.csv](media/zakladni-ukazatele/house_prices_RM.csv) s domy v zónách se středně hustou zástavbou a [house_prices_RH.csv](media/zakladni-ukazatele/house_prices_RH.csv) s domy v zónách s velmi hustou zástavbou.
 
-```py
+<pre>
+    <code>
 # Načteme data
 data_RM = pandas.read_csv("house_prices_RM.csv")
 data_RH = pandas.read_csv("house_prices_RH.csv")
@@ -43,7 +48,8 @@ print(data_RH["SalePrice"].mean())
 # Zjistíme rozptyly
 print(data_RH["SalePrice"].var())
 print(data_RM["SalePrice"].var())
-```
+    </pre>
+</code>
 
 Průměr zjistíme pomocí metody `var()`.
 
@@ -56,7 +62,7 @@ Abychom si popsali význam rozptylu (a variability obecně), ukážeme si ho na 
 - Vysoký rozptyl výkonů u sportovního oddílu znamená, že jsou jejich výkony nevyrovnané. Pokud by nejlepší sportovec nemohl nastoupit do závodu, výrazně to ovlivní výsledek celého týmu.
 - Uvažujme dotazník spokojenosti ve firmě. Pokud má vysoký rozptyl výsledků, jsou někteří zaměstnanci nadšení, ale jiní jsou velmi frustrovaní. Nelze tedy být v klidu, protože průzkum dopadl "jakž takž", frustrovaní zaměstnanci totiž dříve či později odejdou.
 
-![](images/grafik-11.png)
+![](media/zakladni-ukazatele/grafik-11.png)
 
 ## Varianční rozpětí
 
@@ -64,18 +70,22 @@ Podobnou informaci jako rozptyl nám řekne třeba i **rozdíl nejvyšší a nej
 
 K určení variančního rozpětí potřebujeme zjistit maximum a minimum, k tomu vyžijeme metody `max()` a `min()`.
 
-```py
+<pre>
+    <code>
 print(data_RM["SalePrice"].max() - data_RM["SalePrice"].min())
 print(data_RH["SalePrice"].max() - data_RH["SalePrice"].min())
-```
+    </pre>
+</code>
 
 ## Kvantil
 
 Medián odpovídá na otázku, jaká hodnota leží v seřazeném souboru přesně uprostřed, tj. pro jaké číslo platí, že 50 % souboru má menší hodnotu a 50 % větší. Podobnou otázku ale můžeme položit i pro jiné procento, např. se můžeme zeptat, jaká je hraniční hodnota pro 1 %, 10 % nebo 90 % hodnot. Taková čísla označujeme jako **kvantily**. Například desetiprocentní kvantil říká, pro jaké číslo platí že 10 % hodnot souboru je menší a zbylých 90 % větší.
 
-```py
+<pre>
+    <code>
 print(data["SalePrice"].quantile(0.1))
-```
+    </pre>
+</code>
 
 Jaké otázky můžeme zodpovědět:
 - V jakém rozmezí se pohybuje příjem 10 % nejchudších nebo 10 % nejbohatších lidí?
@@ -84,10 +94,12 @@ Jaké otázky můžeme zodpovědět:
 
 Kvantily můžeme využít i jako ukazatel variability - můžeme například vypočítat rozdíl mezi 90%ním a 10%ním kvantilem, případně mezi 75%ním a 25%ním kvantilem. Druhý jmenovaný ukazatel je označován jako **kvartilové rozpětí**.
 
-```py
+<pre>
+    <code>
 print(data["SalePrice"].quantile(0.9) - data["SalePrice"].quantile(0.1))
 print(data["SalePrice"].quantile(0.75) - data["SalePrice"].quantile(0.25))
-```
+    </pre>
+</code>
 
 ## Inverzní kvantilová funkce
 
@@ -97,10 +109,12 @@ Pokud bychom například chtěli prodávat dům, mohlo by být zajímavé vědě
 
 Níže například zjistíme, kolik procent domů je levnějších než 200000.
 
-```py
+<pre>
+    <code>
 from scipy import stats
 stats.percentileofscore(data["SalePrice"], 200000)
-```
+    </pre>
+</code>
 
 Jaké otázky můžeme zodpovědět:
 - Kolik procent lidí má menší (a větší) plat než já?
@@ -111,23 +125,27 @@ Jaké otázky můžeme zodpovědět:
 
 Další možností, jak se podívat na rozložení dat, je histogram. Histogram je graf, který pro různé intervaly hodnot zobrazuje, kolik dat se v daném intervalu nachází.
 
-![](images/histogram.png)
+![](media/zakladni-ukazatele/histogram.png)
 
 Histogram vytvoříme pomocí metody `hist()`.
 
-```py
+<pre>
+    <code>
 data["SalePrice"].hist()
 plt.show()
-```
+    </pre>
+</code>
 
 U histogramu si můžeme zvolit, na kolik parametrů chceme data rozdělit. Pokud dáváme přednost jemnějšímu dělení, můžeme pomocí parametru `bins` nastavit vyšší počet intervalů, například 25.
 
-```py
+<pre>
+    <code>
 data["SalePrice"].hist(bins=25)
 plt.show()
-```
+    </pre>
+</code>
 
-![](images/histogram_2.png)
+![](media/zakladni-ukazatele/histogram_2.png)
 
 V histogramech vidíme další důležitou věc - data jsou rozdělena nesymetricky. Z histogramu vidíme, že v datech jsou i nějaká odlehlá pozorování, což je třeba dům s cenou nad 600 tis.
 
@@ -137,12 +155,14 @@ Uvažujme nyní, že bychom namísto sloupců použili čárový graf. Na osu *y
 
 K vytvoření grafu použijeme metodu `.plot.kde()`. Zkrakta KDE označuje *kernel density estimation*, tj. jádrový odhad hustoty. Musíme totiž myslet na to, že nemáme kompletní data, ale pouze jejich část, proto je naše funkce pouze odhadem funkce hustoty kompletních dat.
 
-![](images/hustota.png)
+![](media/zakladni-ukazatele/hustota.png)
 
-```py
+<pre>
+    <code>
 data["SalePrice"].plot.kde()
 plt.show()
-```
+    </pre>
+</code>
 
 Pokud máme funkci hustoty, je to nejlepší možný popis jakýchkoli dat. Postupem času bylo zjištěno, že hustoty mnohých dat mají podobný tvar. Například níže máme čtyři funkce, které jsou sice různé (mají různě vysoké maximum a jsou různé "roztažené"), ale tvar mají podobný. Všechny čtyři hustoty mají stejné tzv. **statistické rozdělení**. To znamená, že všechny čtyři hustoty lze popsat stejnou matematickou funkcí, která se liší pouze proměnnými (konkrétně průměrem a rozptylem). Statistické rozdělení těchto hustot označujeme jako **normální (Gaussovo) rozdělení**.
 
@@ -174,9 +194,10 @@ Prvním krokem takové analýzy může být vyřešení otázky: Jaké faktory o
 
 Závislost si můžeme ukázat na obrázku, tj. bodovém grafu. K vytvoření obrázku využijeme modul `seaborn`, který slouží ke snadnému vytváření statistických grafů. Nejprve použijeme `JointGrid`, kterým vytvoříme novou tabulku, kde budou vybrané sloupce: již známý `SalePrice` a sloupeček s obytnou plochou domu (bez obytné plochy v podzemní části) `GrLivArea`. Tabulku uložíme do proměnné `g` a následně použijeme metodu `plot_join()` na vytvoření bodového grafu (`scatterplot`).
 
-![](images/bodovy_graf.png)
+![](media/zakladni-ukazatele/bodovy_graf.png)
 
-```py
+<pre>
+    <code>
 import pandas
 import seaborn
 import matplotlib.pyplot as plt
@@ -184,7 +205,8 @@ data = pandas.read_csv("clean_train.csv")
 g = seaborn.JointGrid(data=data, x="GrLivArea", y="SalePrice")
 g.plot_joint(seaborn.scatterplot, legend=False)
 plt.show()
-```
+    </pre>
+</code>
 
 Na grafu vidíme, že cena domu má skutečně tendenci růst s velikostí obytné plochy. Sloupců v našem datovém souboru je ale hodně a není úplně praktické pro každý z nich vytvářet graf a vizuálně řešit velikost závislosti. Můžeme ale využít hodnotu, kterou označujeme **korelace**. Korelace nám dává sílu *lineární stochatické závislosti* mezi dvěma veličinami. Slovo *lineární" znamená, že graficky bychom závislost viděli jako přímku. Korelace může nabývat hodnoty od -1 do +1.
 
@@ -194,10 +216,12 @@ Na grafu vidíme, že cena domu má skutečně tendenci růst s velikostí obytn
 
 Hodnotu korelace zjistíme pomocí metody `corr()` pro zvolenou tabulku. Tato metoda vytvoří tzv. korelační matici, tj. matici, která obsahuje korelace pro všechny dvojice dat v tabulce. Abychom se v obří tabulce neztratili, vybereme si pouze sloupečky `GrLivArea` a `SalePrice`. Protože tentokrát nevybíráme pouze jeden sloupeček, ale seznam sloupců, musíme použít další dvojici hranatých závorek.
 
-```py
+<pre>
+    <code>
 data_vybrane_sloupce = data[["GrLivArea", "SalePrice"]]
 print(data_vybrane_sloupce.corr())
-```
+    </pre>
+</code>
 
 Korelace automaticky neznamená, že obě veličiny se vzájemně ovlivňují.
 
@@ -205,11 +229,11 @@ Uvažujme například počet turistů a počet komárů v kempu u přehrady. Ob�
 
 Podobně můžeme "odhalit" korelaci, která je vy skutečnosti náhodná. Doslova legendárním příkladem se stala korelace mezi počtem lidí, kteří se utopili v důsledku pádu do bazénu, a počtem filmů, ve kterých hrál Nicolas Cage. Z logiky věci je jasné, že tyto veličiny se vzájemně nijak neovlivňují, přesto bychom mezi nimi našli vysokou korelaci.
 
-![](images/1_ERarZ75RoWF8Vn-_AlEmaA.jpeg)
+![](media/zakladni-ukazatele/1_ERarZ75RoWF8Vn-_AlEmaA.jpeg)
 
 Datová věda (*data science*) proto není pouze o výpočtech, ale i o znalosti kontextu a významu dat, se kterými pracujeme.
 
-![](images/1_mgXvzNcwfpnBawI6XTkVRg.png)
+![](media/zakladni-ukazatele/1_mgXvzNcwfpnBawI6XTkVRg.jpeg)
 
 # Cvičení
 
