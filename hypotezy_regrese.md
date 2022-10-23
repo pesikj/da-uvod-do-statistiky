@@ -127,14 +127,14 @@ SpearmanrResult(correlation=0.7312378789702222, pvalue=7.801875110918258e-244)
 
 Číslo je opět velmi malé a menší než 0.05, v tomto případě zamítáme nulovou hypotézu. Tento výsledek je pro nás příznivý. Prokázali jsme totiž závislost mezi cenou domu a jeho podlahovou plochou. Podlahová plocha domu je tedy důležitou informací pro jeho ocenění.
 
-# Cvičení
+## Cvičení
 
-## Plocha garáže
+### Plocha garáže
 
 Na minulé lekci jsme řešili korelaci mezi plochou garáže (`GarageArea`) a cenou domu. Ověř nyní, zda je tato korelace statisticky významná.
 
 - Nejprve sestav hypotézy (nulovou i alternativní).
-- Již víme, že cena domu nemá normální rozdělení, nelze tedy použít test na základě Pearsonova korelačního koeficientu. Použij Spearmanův koeficient i Kendallovo tau pro ověření statistické významnosti lineární závislosti. Zjisti p-hodnoty obou testů. Jaké jsou p-hodnoty? A zamítáme nulovou hypotézu?
+- Již víme, že cena domu nemá normální rozdělení, nelze tedy použít test na základě Pearsonova korelačního koeficientu. Použij Spearmanův koeficient i Kendallovo tau pro ověření statistické významnosti lineární závislosti. Zjisti p-hodnoty obou testů. Jaké jsou p-hodnoty? Jsou výsledky obou testů v souladu? A zamítáme nulovou hypotézu?
 
 # Regrese
 
@@ -190,9 +190,9 @@ print(res.rsquared)
 
 V našem případě je jeho hodnota 0.519, tj. vysvětlili jsme 51.9 % rozptylu ceny, což zatím není moc dobrý výsledek. Další rozšíření modelu vyzkoušíme při cvičení.
 
-# Cvičení
+## Cvičení
 
-## Rozšíření modelu
+### Rozšíření modelu
 
 Přidej do regresního modelu plochu garáže (`GarageArea`). Přidání provedeš tím, že ve svém programu upravíš řádek `formula` přidáním ` + GarageArea`. Jak se změnil koeficient determinace modelu?
 
@@ -222,47 +222,100 @@ Níže jsou příklady dvojic hypotéz.
 * H0: Průměrné zpoždění vlaku z Prahy do Plzně s odjezdem v 18:38 je 5 minut
 * H1: Průměrné zpoždění vlaku z Prahy do Plzně s odjezdem v 18:38 není 5 minut (tj. je méně nebo více než 5 minut)
 
-Pro test hypotézy můžeme využít následující testy.
+Pro test hypotézy můžeme využít následující testy:
 
-[t-test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_1samp.html#scipy.stats.ttest_1samp), který předpokládá, že data mají normální rozdělení
+* [t-test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_1samp.html#scipy.stats.ttest_1samp), který předpokládá, že data mají normální rozdělení.
 
-
-#### Testy normality
+#### Testy na rozdělení
 
 Příklad hypotéz:
 
 * H0: Ceny domů mají normální rozdělení
 * H1: Ceny domů nemají normální rozdělení
 
-Shapiro-Wilk test
+Pro test hypotézy můžeme využít následující testy:
+
+* [Shapiro-Wilk test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html#scipy.stats.shapiro)
+* Kombinace D'Agostinova and Pearsonova testu, který provádí funkce [normaltest](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html#scipy.stats.normaltest).
+
+Pokud v hypotéze potřebujeme ověřit, zda data mají nějaké jiné rozdělení, můžeme použít [Kolmogorov-Smirnov test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kstest.html#scipy.stats.kstest).
 
 ### Testy se dvěma statistickými soubory
 
+Tyto testy porovnávají dva různé statistické soubory.
+
 #### Testy na průměr
 
-párová pozorování
+U testu na průměr máme k dispozici poměrně hodně testů.
 
-výkonnost pracovníků po školení se zvýšila
+Uvažujme nejprve párová pozorování. Párovými pozorování myslíme, že pro každému pozorování z jednoho souboru můžeme přiřadit jiné pozorování podle nějakého logického klíče. Například uvažujme školení pracovníků pracující u výrobní linky. Pokud máme data o rychlosti montáže pracovníků před školením a po školení, můžeme použít párování, protože rychlost před školením a po školení pro jednoho pracovníka tvoří párové pozorování. Pokud bychom chtěli porovnat rychlost pracovníků v jiných směnách nebo jiných závodech, nejedná se o párová pozorování.
 
-výkonnost pracovníků v dílně A je vyšší než v dílně B
+Příklad hypotéz:
 
-Mann–Whitney test
+* H0: Rychlost montáže pracovníků po školení je stejná jako před školením
+* H1: Rychlost montáže pracovníků po školení je vyšší než před školením
 
-voliči vládních stran hodnotí politickou situaci pozitivněji než voliči opozice
+Pro test hypotézy můžeme použít [párový t-test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_rel.html#scipy.stats.ttest_rel). Test předpokládá, že data mají normální rozdělení.
 
-závislost kategoriálních proměnných
+Pro nepárové testy můžeme mít následující hypotézy:
 
-chí-kvadrát test nezávislosti
+* H0: Rychlost montáže pracovníků v obou sledovaných směnách je stejná
+* H1: Rychlost montáže pracovníků v obou sledovaných směnách je různá
 
-oblíbený nápoj osoby se liší dle pohlaví
+Pro test hypotézy můžeme použít [t-test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html#scipy.stats.ttest_ind). Test předpokládám, že data mají normálhní rozdělení. U testu existují dvě varianty - jedna předpokládá, že data mají stejný rozptyl, druhá uvažuje, že soubory mají různé rozptyly.
 
-korelace
+#### Testy na rozdělení
 
-cena domu a obytná plocha domu jsou statisticky závislé
-Test s využitím Spearmanova koeficientu nebo Kendallova tau
+Testy na rozdělení umožňují porovnat, zda mají dva statistické soubory stejné rozdělení, tj. zda mají stejnou distrubuční funkci. Opět rozlišujeme párový a nepárový test.
 
-test s využitím Pearsonova koeficientů
+Pro párový test můžeme formulovat hypotézy:
 
-ANOVA
+* H0: Rozdělení rychlosti montáže pracovníků po školení je stejná jako před školením
+* H1: Rozdělení rychlosti montáže pracovníků po školení je jiná než před školením
 
-výkonnost pracovníků ve třech dílnách se liší
+Pro test můžeme použít [Wilcoxonův test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html#scipy.stats.wilcoxon). Test je neparametrický, tj. nevyžaduje normální rozdělení.
+
+Pro nepárová pozorování můžeme formulovat hypotézy:
+
+* H0: Rozdělení rychlosti montáže v obou sledovaných směnách je stejná
+* H1: Rozdělení rychlosti montáže v obou sledovaných směnách je různá
+
+Pro otestování můžeme použít [Mann–Whitney test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html#scipy.stats.mannwhitneyu).
+
+#### Testy závislosti kategoriálních dat
+
+Kategoriální data jsou taková, která obecně není číslo, ale text (v řeči programování řetězec). Kategoriální proměnnou tedy může být oblíbený programovací jazyk, předmět na škole, nápoj, nejvyšší dosažené vzdělání, zda je člověk kuřák atd. Kategoriální proměnné můžeme porovnat mezi sebou a rozhodnout, zda je mezi nimi závislost.
+
+Hypotézy mohou být například následující:
+
+* H0: Oblíbený předmět nezávisí na pohlaví
+* H1: Oblíbený předmět závisí na pohlaví
+
+Pro test hypotézy můžeme použít [chí-kvadrát test nezávislosti](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2_contingency.html). Test je založený na použití kontingenční (pivot) tabulky.
+
+#### Test statistické významnosti korelace
+
+Test řeší, zda je zjištěná korelace statisticky významná. 
+
+Uvažujme následující hypotézy:
+
+H0: Cena domu a obytná plocha domu nejsou statisticky závislé
+H1: Cena domu a obytná plocha domu jsou statisticky závislé
+
+
+Pokud mají data normální rozdělení, lze využít test založený na [Pearsonově korelačním koeficientu](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html#scipy.stats.pearsonr). Pokud data nemají normální rozdělení, můžeme využít test s využitím [Spearmanova koeficientu](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.spearmanr.html#scipy.stats.spearmanr) nebo [Kendallova tau](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kendalltau.html#scipy.stats.kendalltau).
+
+### Testy se třemi a více statistickými soubory
+
+#### Test na průměr
+
+Test na průměr umožňuje porovnat, zda jsou průměry hodnot různé u tří a více souborů.
+
+Pro test můžeme formulovat hypotézy:
+
+* H0: Průměrný čas montáže je stejný u pracovníků všech tří směn
+* H1: Průměrný čas montáže různý alespoň dvě směny
+
+Uvažujme, že máme ranní, odpolední a noční směnu. Test nám pouze řekne, zda je mezi směnami nějaký rozdíl, ale nevíme přesně jaký. Může tedy být například stejný průměr ranní a odpolední směny a noční se od nich liší, může být stejný průměr ranní a noční směny a odpolední se od nich liší nebo může mít každá směna průměr odlišný od ostatních.
+
+Pokud mají všechny soubory normální rozdělení, můžeme použít [ANOVA test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.f_oneway.html#scipy.stats.f_oneway). Pokud data nemají normální rozdělení, je možné využít neparametrický [Kruskall-Wallis test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kruskal.html#scipy.stats.kruskal).
