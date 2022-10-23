@@ -63,18 +63,6 @@ Vraťme se k výběru korelačního koeficientu. Pandas ve výchozím nastavení
 
 Pokud si nejsme jisti, zda je tento předpoklad splněn, můžeme opět použít testování hypotéz.
 
-| Počet datových souborů | Testovaný ukazatel | Předpoklady | Příklad výzkumné otázky | Vhodný test |
-|---|---|---|---|---|
-| 1 | průměr | normální rozdělení | průměrná výška mužů na univerzitě je méně než 180 cm | t-test |
-|   | rozdělení dat | | ceny domů mají normální rozdělení | Shapiro-Wilk test |
-| 2 | průměr | párová pozorování | výkonnost pracovníků po školení se zvýšila | párový t-test |
-|   |  | normální rozdělení | výkonnost pracovníků v dílně A je vyšší než v dílně B | t-test (záleží na tom, zda mají data stejný rozptyl) |
-|   |  | neparametrický test | voliči vládních stran hodnotí politickou situaci pozitivněji než voliči opozice | Mann–Whitney test |
-|   | závislost kategoriálních proměnných |  | oblíbený nápoj osoby se liší dle pohlaví | chí-kvadrát test nezávislosti |
-|   | korelace | normální rozdělení | cena domu a obytná plocha domu jsou statisticky závislé | test s využitím Pearsonova koeficientů |
-|   | korelace | | cena domu a obytná plocha domu jsou statisticky závislé | Test s využitím Spearmanova koeficientu nebo Kendallova tau |
-| 3 | průměr | normální rozdělení | výkonnost pracovníků ve třech dílnách se liší | ANOVA |
-
 ## Test normality dat
 
 Začneme s testem cen domů. Testujeme-li normalitu dat, formulujeme hypotézy následujícím způsobem:
@@ -209,3 +197,72 @@ V našem případě je jeho hodnota 0.519, tj. vysvětlili jsme 51.9 % rozptylu 
 Přidej do regresního modelu plochu garáže (`GarageArea`). Přidání provedeš tím, že ve svém programu upravíš řádek `formula` přidáním ` + GarageArea`. Jak se změnil koeficient determinace modelu?
 
 Dále můžeš přidat plochu pozemku (`LotArea`) a rok, kdy byl dům naposledy rekonstruován (`YearRemodAdd`). Jaký je výsledný index determinace?
+
+
+## Přehled statistických testů v Pythonu
+
+Tato část vám pomůže s výběrem vhodného testu pro vaše projekty.
+
+### Testy s jedním statistickým souborem
+
+Tyto testy porovnávají jeden statistický soubor (jeden sloupec tabulky) oproti nějaké skutečnosti.
+
+#### Testy na průměr
+
+Testy na průměr porovnávají průměr souboru dat s nějakou námi definovanou hodnotou. U testů na průměr můžeme alternativní hypotézu formulovat pomocí znaménka není rovno, menší než nebo větší než.
+
+Níže jsou příklady dvojic hypotéz.
+
+* H0: Průměrná výška basketbalistek v České republice je 180 cm
+* H1: Průměrná výška basketbalistek v České republice je více než 180 cm
+
+* H0: Průměrná chyba při výrobě součástky do motoru je 0.1 mm
+* H1: Průměrná chyba při výrobě součástky do motoru je méně než 0.1 mm
+
+* H0: Průměrné zpoždění vlaku z Prahy do Plzně s odjezdem v 18:38 je 5 minut
+* H1: Průměrné zpoždění vlaku z Prahy do Plzně s odjezdem v 18:38 není 5 minut (tj. je méně nebo více než 5 minut)
+
+Pro test hypotézy můžeme využít následující testy.
+
+[t-test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_1samp.html#scipy.stats.ttest_1samp), který předpokládá, že data mají normální rozdělení
+
+
+#### Testy normality
+
+Příklad hypotéz:
+
+* H0: Ceny domů mají normální rozdělení
+* H1: Ceny domů nemají normální rozdělení
+
+Shapiro-Wilk test
+
+### Testy se dvěma statistickými soubory
+
+#### Testy na průměr
+
+párová pozorování
+
+výkonnost pracovníků po školení se zvýšila
+
+výkonnost pracovníků v dílně A je vyšší než v dílně B
+
+Mann–Whitney test
+
+voliči vládních stran hodnotí politickou situaci pozitivněji než voliči opozice
+
+závislost kategoriálních proměnných
+
+chí-kvadrát test nezávislosti
+
+oblíbený nápoj osoby se liší dle pohlaví
+
+korelace
+
+cena domu a obytná plocha domu jsou statisticky závislé
+Test s využitím Spearmanova koeficientu nebo Kendallova tau
+
+test s využitím Pearsonova koeficientů
+
+ANOVA
+
+výkonnost pracovníků ve třech dílnách se liší
