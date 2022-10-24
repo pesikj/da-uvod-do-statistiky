@@ -128,8 +128,11 @@ Data tedy nemají normální rozdělení, což znamená, že na ně nemůžeme p
 
 Na minulé lekci jsme řešili korelaci mezi plochou garáže (`GarageArea`) a cenou domu. Ověř nyní, zda je tato korelace statisticky významná.
 
-- Nejprve sestav hypotézy (nulovou i alternativní).
-- Již víme, že cena domu nemá normální rozdělení, nelze tedy použít test na základě Pearsonova korelačního koeficientu. Použij Spearmanův koeficient i Kendallovo tau pro ověření statistické významnosti lineární závislosti. Zjisti p-hodnoty obou testů. Jaké jsou p-hodnoty? Jsou výsledky obou testů v souladu? A zamítáme nulovou hypotézu?
+- Již víme, že cena domu nemá normální rozdělení, nelze tedy použít test na základě Pearsonova korelačního koeficientu. Použij Kendallovo tau pro ověření statistické významnosti lineární závislosti. Jaká je p-hodnota testu? Zamítáme nulovou hypotézu?
+
+### Plocha garáže 2
+
+Ač cena domu nemá normální rozdělení, možná by ho mohla mít plocha garáže. Ověř hypotézu normality pro plochu garáže. Formuluj hypotézy, následně použij Shapiro-Wilk test. Jaká je p-hodnota testu? A co to znamená?
 
 # Regrese
 
