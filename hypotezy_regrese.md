@@ -94,13 +94,13 @@ Co tato záhadná čísla znamenají?
 
 Platí následující pravidla.
 
-- Pokud je **p-hodnota větší než hladina významnosti, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
-- Pokud je **p-hodnota menší než hladina významnosti, nezamítáme nulovou hypotézu.**
+- Pokud je **p-hodnota menší než hladina významnosti, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
+- Pokud je **p-hodnota větší než hladina významnosti, nezamítáme nulovou hypotézu.**
 
 Pokud si zvolíme hladinu významnosti jako 5 %, což je nejčastější volba, můžeme zapsat pravidlo konkrétněji.
 
-- Pokud je **p-hodnota > 0.05, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
-- Pokud je **p-hodnota < 0.05, nezamítáme nulovou hypotézu.**
+- Pokud je **p-hodnota < 0.05, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
+- Pokud je **p-hodnota > 0.05, nezamítáme nulovou hypotézu.**
 
 Na internetu lze nalézt obrovské množství vědeckých i méně vědeckých obrázků, které vám umožní si toto pravidlo zapamatovat.
 
