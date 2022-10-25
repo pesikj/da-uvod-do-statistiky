@@ -2,7 +2,7 @@
 
 Hypotézou obecně myslíme nějaké tvrzení. Testování hypotéz se zabývá ověřením, zda je nějaká hypotéza platná. Při testování hypotéz předpokládáme, že máme k dispozici nějaký vzorek dat, nikoli kompletní data. To vnáší prvek určité nejistoty.
 
-Vraťme se k našemu příkladu na závislost ceny domu a podlahové plochy. Naše data jsou pouze vzorkem údajů o celém realitním trhu v USA. V datech jsme zjistili korelaci mezi cenou a plochou domu. Můžeme ale na základě korelačního koeficientu skutečně říct, že jsou tyto veličiny závislé?
+Vraťme se k našemu příkladu na závislost ceny domu a podlahové plochy. Naše data jsou pouze vzorkem údajů o celém realitním trhu v USA. V datech jsme zjistili korelaci mezi cenou a plochou domu. Můžeme ale na základě korelačního koeficientu skutečně říct, že jsou tyto veličiny skutečně závislé?
 
 Pokud posuzujeme závislost dvou sloupců tabulky, vstupují do hry dva faktory:
 
@@ -29,16 +29,21 @@ Uvažujme následující dvojici hypotéz:
 - Nulová hypotéza: Obytná plocha domu a jeho cena jsou lineárně nezávislé (tj. korelační koeficient = 0).
 - Alternativní hypotéza: Obytná plocha domu a jeho cena jsou lineárně závislé (tj. korelační koeficient nerovná se 0).
 
-Je zřejmé, že obě hypotézy nemohou být pravidivé.
+Je zřejmé, že obě hypotézy nemohou být pravidivé. Při testování hypotéz můžeme dojít k následujícím závěrům:
 
-Poněkud nepříjemnou zprávou pro vás může být informace, že výsledek našeho testu může být chybný, a to i v případě, že jsme postuovali správně. Může se totiž stát, že prostě máme smůlu na náš vzorek, který nereprezentuje data úplně správně.
+* zamítáme H0 (a tedy tvrdíme, že platí H1),
+* nezamítáme H0 (a tedy jsme neprokázali, že platí H1).
+
+Nikdy neříkáme, že jsme prokázali H0. Níže si vysvětlíme proč.
+
+Poněkud nepříjemnou zprávou pro vás může být informace, že výsledek našeho testu může být chybný, a to i v případě, že jsme postuovali správně. Může se totiž stát, že prostě máme smůlu na náš vzorek, který nereprezentuje data o celé populaci úplně správně.
 
 Při testování se můžeme dopustit 2 chyb, které jsou popsány v tabulce níže.
 
 |   | Plocha a cena jsou nezávislé | Plocha a cena jsou závislé |
 |---|---|---|
-| **Nezamítáme nulovou hypotézu** | Správný výsledek | Chyba II. druhu |
-| **Zamítáme nulovou hypotézu**  | Chyba I. druhu | Správný výsledek |
+| **Neprokázali jsme závislost** | Správný výsledek | Chyba II. druhu |
+| **Tvrdíme, že cena a plocha jsou závislé**  | Chyba I. druhu | Správný výsledek |
 
 Rozepišme si nyní tyto chyby obecně
 
@@ -51,8 +56,7 @@ Při testování hypotéz si zpravidla vybíráme pravděpodobnost, s jakou se c
 
 ## Výběr vhodného testu
 
-Dále zvolíme vhodný test pro ověření naší hypotézy.
-Statistických testů existuje obrovské množství a výběr toho správného závisí obecně na několika faktech:
+Dále zvolíme vhodný test pro ověření naší hypotézy. Statistických testů existuje obrovské množství a výběr toho správného závisí obecně na několika faktech:
 
 - Počet souborů (skupin) dat, se kterými chceme v testu pracovat. V tomto konkrétním případě chceme pracovat se dvěma soubory, můžeme mít ale pouze jeden či naopak 3 a více.
 - Statistický ukazatel nebo skutečnost, kterou chceme ověřit. Může to být například průměr, rozptyl nebo (jak je tomu v našem případě) statistická závislost.
@@ -80,7 +84,7 @@ Co tato záhadná čísla znamenají?
 - `statistics` je hodnota statistiky testu. Statistika testu je v podstatě matematický vzoreček. V tomto případě číslo říká, jak moc pořadí pozorování v jednom souboru odpovídá pořadí pozorování ve druhém souboru.
 - `pvalue` (p-hodnota) se váže k hladině významnosti. p-hodnotu využijeme pro rozhodnutí o platnosti alternativní hypotézy.
 
-Platí následující pravidla.
+Platí následující **obecná** pravidla.
 
 - Pokud je **p-hodnota menší než hladina významnosti, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
 - Pokud je **p-hodnota větší než hladina významnosti, nezamítáme nulovou hypotézu.**
@@ -128,7 +132,7 @@ Data tedy nemají normální rozdělení, což znamená, že na ně nemůžeme p
 
 Na minulé lekci jsme řešili korelaci mezi plochou garáže (`GarageArea`) a cenou domu. Ověř nyní, zda je tato korelace statisticky významná.
 
-- Již víme, že cena domu nemá normální rozdělení, nelze tedy použít test na základě Pearsonova korelačního koeficientu. Použij Kendallovo tau pro ověření statistické významnosti lineární závislosti. Jaká je p-hodnota testu? Zamítáme nulovou hypotézu?
+Použij Kendallovo tau pro ověření statistické významnosti lineární závislosti. Jaká je p-hodnota testu? Zamítáme nulovou hypotézu?
 
 ### Plocha garáže 2
 
@@ -187,6 +191,22 @@ print(res.rsquared)
 ```
 
 V našem případě je jeho hodnota 0.519, tj. vysvětlili jsme 51.9 % rozptylu ceny, což zatím není moc dobrý výsledek. Další rozšíření modelu vyzkoušíme při cvičení.
+
+Model můžeme použít k odhadu ceny domu. Níže je příklad toho, jak odhadnout cenu domu pro domy s plochou 2000, 2500 a 2900.
+
+```py
+# Vytvořím si slovník, kde jsou data, která chci odhadnout
+# Chci odhadnout 3 domy s plochou 2000, 2500 a 2900
+domy_k_odhadu = {'GrLivArea': [2000, 2500, 2900]}
+# Převedu slovník na pandas tabulku
+domy_k_odhadu = pandas.DataFrame(domy_k_odhadu)
+# Přidám konstantu, podobně jako u tabulky pro tvorbu modelu
+domy_k_odhadu = sm.add_constant(domy_k_odhadu)
+# Na základě modelu provedu odhad
+odhady = res.predict(domy_k_odhadu)
+# Vypíšu výsledek - např. odhadovaná cena domu s plochou 2000 je 235043.377438
+print(odhady)
+```
 
 ## Cvičení
 
