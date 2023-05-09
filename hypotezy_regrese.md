@@ -2,22 +2,14 @@
 
 Hypotézou obecně myslíme nějaké tvrzení. Testování hypotéz se zabývá ověřením, zda je nějaká hypotéza platná. Při testování hypotéz předpokládáme, že máme k dispozici nějaký vzorek dat, nikoli kompletní data. To vnáší prvek určité nejistoty.
 
-Vraťme se k prvnímu příkladu - srovnávní voleb a předvolebního průzkumu. Uvažujme tvrzení, že má různou podporu voličů v Praze než v Brně. Pokud se díváme na skutečný výsledek voleb, jasně vidíme, kolik strana ve volbách získala v obou městech. Pokud provádíme předvolební průzkum, pracujeme s nějakým vzorkem (výběrem) z populace, který má např. 500 lidí v obou městech. To přináší do našeho zkoumání nejistotu. Může se například stát, že jsme (čistě náhodou) do našeho průzkumu v jednom městě vybrali lidi, kteří mají danou stranu více rádi, než zbytek města.
+Vraťme se k našemu příkladu na závislost ceny domu a podlahové plochy. Naše data jsou pouze vzorkem údajů o celém realitním trhu v USA. V datech jsme zjistili korelaci mezi cenou a plochou domu. Můžeme ale na základě korelačního koeficientu skutečně říct, že jsou tyto veličiny skutečně závislé?
 
-Uvažujme například následující výsledky:
+Pokud posuzujeme závislost dvou sloupců tabulky, vstupují do hry dva faktory:
 
-- V Praze podporuje danou stranu 40 % lidí a v Brně pouze 5 %. V takovém případě bychom se asi intuitivně shodli, že podpora v Praze je vyšší.
-- V Praze podporuje danou stranu 10 % lidí a v Brně 50 %. V takovém případě bychom se asi intuitivně shodli, že podpora v Brně je vyšší.
-- V Praze podporuje danou stranu 26 % lidí a v Brně 25 %. Zde už výsledek není jednoznačně, protože rozdíl je opravdu malý. Znamená 1 procentní bod rozdílu v našem průzkumu opravdu, že se podpora voličů liší? Co když se nám pouze náhodou do našeho vzorku v Praze dostalo více podporovatelů dané strany.
+- velikost korelačního koeficientu,
+- množství dat.
 
-Právě na posledním příkladě se ukazuje, proč je testování hypotéz užitečné. Nedokáže sice jednoznačně říct, zda je hypotéza pravdivá, může nám ale říct, s jakou pravděpodobností je pravdivá nebo s jako pravděpodobností se mýlíme.
-
-Vrátíme-li se k našemu souboru o cenách domů. Náš datový soubor určitě neobsahuje informace o všech domech v USA, ale pouze o některých, tj. o nějakém výběru domů. Pokud bychom tedy chtěli ověřit nějaká tvrzení o všech domech, opět se dostaneme do roviny testování hypotéz.
-
-- Domy s bazénem jsou v průměru dražší než domy bez bazénu.
-- Cena domu je ovlivněna jeho obytnou plochou.
-- Ceny domu ve středně hustě zalidněných oblastech jsou méně různorodé než ceny domů ve velmi hustě zalidněných oblastech.
-- Průměrná cena pozemků je různá pro různé typy umístění pozemku v zástavbě.
+U korelačního koeficientu platí, že čím je blíže 1 nebo - 1, tím je závislost vyšší. Dále platí, že čím více máme dat, tím více si můžeme být jisti naším výsledkem. Tj. pokud máme silnou korelaci u malého vzorku, může jít o náhodu, silná korelace u velkého vzorku dat už ale náhoda spíše nebude. Testování hypotéz je nástroj, který nám řekne, zda je pozorovaná korelace náhodná, či zda jsou data skutečně závislá.
 
 Testování hypotéz má pevný postup, který se skládá z následujících kroků:
 
@@ -34,14 +26,26 @@ Navažme na předchozí lekci, kde jsme měřili sílu statistické závislosti 
 
 Uvažujme následující dvojici hypotéz:
 
-- Nulová hypotéza: Obytná plocha domu a jeho cena jsou lineárně nezávislé.
-- Alternativní hypotéza: Obytná plocha domu a jeho cena jsou lineárně závislé.
+- Nulová hypotéza: Obytná plocha domu a jeho cena jsou lineárně nezávislé (tj. korelační koeficient = 0).
+- Alternativní hypotéza: Obytná plocha domu a jeho cena jsou lineárně závislé (tj. korelační koeficient nerovná se 0).
 
-Je zřejmé, že obě hypotézy nemohou být pravidivé.
+Je zřejmé, že obě hypotézy nemohou být pravidivé. Při testování hypotéz můžeme dojít k následujícím závěrům:
 
-Poněkud nepříjemnou zprávou pro vás může být informace, že výsledek našeho testu může být chybný, a to i v případě, že jsme postuovali správně. Může se totiž stát, že prostě máme smůlu na náš vzorek, který nereprezentuje data úplně správně.
+* zamítáme H0 (a tedy tvrdíme, že platí H1),
+* nezamítáme H0 (a tedy jsme neprokázali, že platí H1).
+
+Nikdy neříkáme, že jsme prokázali H0.
+
+Poněkud nepříjemnou zprávou pro vás může být informace, že výsledek našeho testu může být chybný, a to i v případě, že jsme postuovali správně. Může se totiž stát, že prostě máme smůlu na náš vzorek, který nereprezentuje data o celé populaci úplně správně.
 
 Při testování se můžeme dopustit 2 chyb, které jsou popsány v tabulce níže.
+
+|   | Plocha a cena jsou ve skutečnosti nezávislé | Plocha a cena jsou ve skutečnosti závislé |
+|---|---|---|
+| **Neprokázali jsme závislost** | Správný výsledek | Chyba II. druhu |
+| **Tvrdíme, že cena a plocha jsou závislé**  | Chyba I. druhu | Správný výsledek |
+
+Rozepišme si nyní tyto chyby obecně
 
 |   | Nulová hypotéze platí | Nulová hypotéza neplatí |
 |---|---|---|
@@ -52,20 +56,49 @@ Při testování hypotéz si zpravidla vybíráme pravděpodobnost, s jakou se c
 
 ## Výběr vhodného testu
 
-Dále zvolíme vhodný test pro ověření naší hypotézy.
-Statistických testů existuje obrovské množství a výběr toho správného závisí obecně na několika faktech:
+Dále zvolíme vhodný test pro ověření naší hypotézy. Statistických testů existuje obrovské množství a výběr toho správného závisí obecně na několika faktech:
 
 - Počet souborů (skupin) dat, se kterými chceme v testu pracovat. V tomto konkrétním případě chceme pracovat se dvěma soubory, můžeme mít ale pouze jeden či naopak 3 a více.
 - Statistický ukazatel nebo skutečnost, kterou chceme ověřit. Může to být například průměr, rozptyl nebo (jak je tomu v našem případě) statistická závislost.
 - Předpoklady testu. Předpoklad je nějaká podmínka, která musí být splněna, aby test dával kvalitní výsledky. Mnoho testů má předpoklad statistického rozdělení dat. Často testy rozdělujeme na parametrické a neparametrické, kde neparametrické testy jsou testy s mírnějšími předpoklady.
 
-Vraťme se k výběru korelačního koeficientu. Pandas ve výchozím nastavení používá tzv. Pearsonův korelační koeficient. Pokud bychom s jeho pomocí chtěli ověřit, zda je vliv jedné veličiny na druhou statisticky významný, je potřeba pamatovat na to, že test hypotézy o závislosti za pomocí Pearsonova korelačního koeficientu **předpokládá, že data mají normální rozdělení** (normalitu dat).
+Vraťme se k výběru korelačního koeficientu. Pro test použijeme test pomocí tzv. Kendallovo tau. Tento test je jedním z tzv. neparametrických testů, tj. nevyžaduje, aby data měla normální rozdělení. Funguje na porovnání pořadí hodnot. Pokud jsou data závislá, pak by logicky nejdražší domy měly být mezi největšími a nejlevnější domy mezi nejmenšími. Pokud by naopak data byla nezávislá, největší domy budou jak mezi drahými, tak mezi levnými, a to samé platí i pro nejmenší domy.
 
-Pokud si nejsme jisti, zda je tento předpoklad splněn, můžeme opět použít testování hypotéz.
+```py
+import pandas
+from scipy import stats
+
+data = pandas.read_csv("clean_train.csv")
+res = stats.kendalltau(data["SalePrice"], data["GrLivArea"])
+print(res)
+```
+
+Výsledek je následující (čísla se můžou mírně lišit):
+
+```py
+KendalltauResult(correlation=0.543863812013887, pvalue=1.995410251143093e-211)
+```
+
+Co tato záhadná čísla znamenají?
+
+- `statistics` je hodnota statistiky testu. Statistika testu je v podstatě matematický vzoreček. V tomto případě číslo říká, jak moc pořadí pozorování v jednom souboru odpovídá pořadí pozorování ve druhém souboru.
+- `pvalue` (p-hodnota) se váže k hladině významnosti. p-hodnotu využijeme pro rozhodnutí o platnosti alternativní hypotézy.
+
+Platí následující **obecná** pravidla.
+
+- Pokud je **p-hodnota menší než hladina významnosti, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
+- Pokud je **p-hodnota větší než hladina významnosti, nezamítáme nulovou hypotézu.**
+
+Pokud si zvolíme hladinu významnosti jako 5 %, což je nejčastější volba, můžeme zapsat pravidlo konkrétněji.
+
+- Pokud je **p-hodnota < 0.05, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
+- Pokud je **p-hodnota > 0.05, nezamítáme nulovou hypotézu.**
+
+V našem případě je p-hodnota `1.995410251143093e-211`. Pozor, velmi důležitý je závěr `e-211`. Číslo je ve skutečnosti extrémně malé, prvních 210 čísel desetinné části jsou 0 a až poté přichází nějaká nenulová čísla. Hodnota je tedy rozhodně menší než 0.05, tím pádem nulovou hypotézu zamítáme a tvrdíme, že obytná plocha domu a cena domu jsou lineárně závislé. Ocenění domu by tedy mělo uvažovat podlahovou plochu domu.
 
 ## Test normality dat
 
-Začneme s testem cen domů. Testujeme-li normalitu dat, formulujeme hypotézy následujícím způsobem:
+Mnoho statistických testů vyžaduje normalitu dat, tj. to, že data mají normální rozdělení. Testujeme-li normalitu dat, formulujeme hypotézy následujícím způsobem:
 
 - Nulová hypotéza: Ceny domů v našem souboru mají normální rozdělení.
 - Alternativní hypotéza: Ceny domů v našem souboru nemají normální rozdělení.
@@ -87,45 +120,7 @@ Funkce vrací tajemný výsledek
 ShapiroResult(statistic=0.8918800354003906, pvalue=8.921436004661806e-31)
 ```
 
-Co tato záhadná čísla znamenají?
-
-- `statistics` je hodnota statistiky testu. Statistika testu je v podstatě matematický vzoreček. Každý statistický test má vlastní vzorek pro výpočet statistiky. V případě Mann-Whitney testu měří vzoreček, jak jsou hodnoty v datech odlišné od normálního rozdělení.
-- `pvalue` (p-hodnota) se váže k hladině významnosti. p-hodnotu využijeme pro rozhodnutí o platnosti alternativní hypotézy.
-
-Platí následující pravidla.
-
-- Pokud je **p-hodnota menší než hladina významnosti, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
-- Pokud je **p-hodnota větší než hladina významnosti, nezamítáme nulovou hypotézu.**
-
-Pokud si zvolíme hladinu významnosti jako 5 %, což je nejčastější volba, můžeme zapsat pravidlo konkrétněji.
-
-- Pokud je **p-hodnota < 0.05, zamítáme nulovou hypotézu** (tj. platí alternativní hypotéza).
-- Pokud je **p-hodnota > 0.05, nezamítáme nulovou hypotézu.**
-
-Na internetu lze nalézt obrovské množství vědeckých i méně vědeckých obrázků, které vám umožní si toto pravidlo zapamatovat.
-
-![](images/p-value_meme.png)
-
-V našem případě je p-hodnota `8.921436004661806e-31`. Pozor, velmi důležitý je závěr `e-31`. Číslo je ve skutečnosti velmi malé, prvních 30 čísel desetinné části jsou 0 a až poté přichází nějaká nenulová čísla. Hodnota je tedy rozhodně menší než 0.05, tím pádem nulovou hypotézu zamítáme a tvrdíme, že data o cenách domů nemají normální rozdělení.
-
-## Test korelace
-
-Vraťme se k testu korelace. Víme, že data o cenách domů nemají normální rozdělení, měli bychom tedy použít test založený na Spearmanově koeficientu nebo na Kendallově tau.
-
-Využijme Spearmanův koeficient.
-
-```py
-res = stats.spearmanr(data["GrLivArea"], data["SalePrice"])
-print(res)
-```
-
-Program vrátí výsledek
-
-```
-SpearmanrResult(correlation=0.7312378789702222, pvalue=7.801875110918258e-244)
-```
-
-Číslo je opět velmi malé a menší než 0.05, v tomto případě zamítáme nulovou hypotézu. Tento výsledek je pro nás příznivý. Prokázali jsme totiž závislost mezi cenou domu a jeho podlahovou plochou. Podlahová plocha domu je tedy důležitou informací pro jeho ocenění.
+Data tedy nemají normální rozdělení, což znamená, že na ně nemůžeme použít parametrické testy.
 
 ## Cvičení
 
@@ -133,8 +128,11 @@ SpearmanrResult(correlation=0.7312378789702222, pvalue=7.801875110918258e-244)
 
 Na minulé lekci jsme řešili korelaci mezi plochou garáže (`GarageArea`) a cenou domu. Ověř nyní, zda je tato korelace statisticky významná.
 
-- Nejprve sestav hypotézy (nulovou i alternativní).
-- Již víme, že cena domu nemá normální rozdělení, nelze tedy použít test na základě Pearsonova korelačního koeficientu. Použij Spearmanův koeficient i Kendallovo tau pro ověření statistické významnosti lineární závislosti. Zjisti p-hodnoty obou testů. Jaké jsou p-hodnoty? Jsou výsledky obou testů v souladu? A zamítáme nulovou hypotézu?
+Použij Kendallovo tau pro ověření statistické významnosti lineární závislosti. Jaká je p-hodnota testu? Zamítáme nulovou hypotézu?
+
+### Plocha garáže 2
+
+Ač cena domu nemá normální rozdělení, možná by ho mohla mít plocha garáže. Ověř hypotézu normality pro plochu garáže. Formuluj hypotézy, následně použij Shapiro-Wilk test. Jaká je p-hodnota testu? A co to znamená?
 
 # Regrese
 
@@ -189,6 +187,22 @@ print(res.rsquared)
 ```
 
 V našem případě je jeho hodnota 0.519, tj. vysvětlili jsme 51.9 % rozptylu ceny, což zatím není moc dobrý výsledek. Další rozšíření modelu vyzkoušíme při cvičení.
+
+Model můžeme použít k odhadu ceny domu. Níže je příklad toho, jak odhadnout cenu domu pro domy s plochou 2000, 2500 a 2900.
+
+```py
+# Vytvořím si slovník, kde jsou data, která chci odhadnout
+# Chci odhadnout 3 domy s plochou 2000, 2500 a 2900
+domy_k_odhadu = {'GrLivArea': [2000, 2500, 2900]}
+# Převedu slovník na pandas tabulku
+domy_k_odhadu = pandas.DataFrame(domy_k_odhadu)
+# Přidám konstantu, podobně jako u tabulky pro tvorbu modelu
+domy_k_odhadu = sm.add_constant(domy_k_odhadu)
+# Na základě modelu provedu odhad
+odhady = res.predict(domy_k_odhadu)
+# Vypíšu výsledek - např. odhadovaná cena domu s plochou 2000 je 235043.377438
+print(odhady)
+```
 
 ## Cvičení
 
